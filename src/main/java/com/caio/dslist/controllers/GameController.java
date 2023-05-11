@@ -22,21 +22,15 @@ public class GameController {
 	
 	@GetMapping
 	public List<GameMinDTO> listGames() {
-		
 		List<GameMinDTO> gamesDTO = new ArrayList<>();
-		
 		gamesDTO = gameService.findAllGamesDTO();
-		
 		return gamesDTO;
 	}
 	
 	@GetMapping(value = "/{id}")
 	public GameFullDTO getGameById(@PathVariable Long id) {
-		
 		GameFullDTO gameDTO = gameService.findByGameId(id);
-		
 		return gameDTO;
-		
 	}
 	
 	

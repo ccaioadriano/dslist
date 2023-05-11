@@ -9,6 +9,7 @@ import org.springframework.transaction.annotation.Transactional;
 import com.caio.dslist.dto.GameFullDTO;
 import com.caio.dslist.dto.GameMinDTO;
 import com.caio.dslist.entities.Game;
+import com.caio.dslist.projections.GameMinProjection;
 import com.caio.dslist.repositories.GameRepository;
 
 @Service
@@ -35,6 +36,17 @@ public class GameService {
 		GameFullDTO gameDTO = new GameFullDTO(gameById);
 
 		return gameDTO;
+	}
+	
+	@Transactional(readOnly = true)
+	public List<GameMinDTO> findGamesByList(Long listId) {
+
+		List<GameMinProjection> gamesProjection = gameRepository.searchGamesByList(listId);
+
+		// TRANSFORMA A LISTA DE GAMES(ENTITY) EM UMA LISTA DE GAMES DTO
+		List<GameMinDTO> gamesProjectionDTO = gamesProjection.stream().map(gamesByList -> new GameMinDTO(gamesByList)).toList();
+
+		return gamesProjectionDTO;
 	}
 
 }
